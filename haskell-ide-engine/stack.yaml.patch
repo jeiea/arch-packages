@@ -1,0 +1,10 @@
+diff --git a/stack.yaml b/stack.yaml
+index 5e8eeeb1..ecde9bb5 100644
+--- a/stack.yaml
++++ b/stack.yaml
+@@ -1,4 +1,4 @@
+-resolver: nightly-2019-04-30 # First GHC 8.6.5
++resolver: lts-13.23 # First GHC 8.6.5
+ packages:
+ - .
+ - hie-plugin-api

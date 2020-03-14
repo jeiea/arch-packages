@@ -1,0 +1,10 @@
+post_install() {
+  useradd -r -s /sbin/nologin mysql
+  chown mysql:mysql /var/lib/mysql
+  /usr/bin/mysqld --initialize-insecure --user=mysql
+}
+
+post_remove() {
+  userdel mysql
+}
+

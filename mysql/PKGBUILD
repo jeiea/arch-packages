@@ -1,0 +1,59 @@
+# This is an example PKGBUILD file. Use this as a start to creating your own,
+# and remove these comments. For more information, see 'man PKGBUILD'.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Maintainer: jeiea <solum5013@gmail.com>
+pkgname=mysql-prebuilt
+pkgver=0.1
+pkgrel=1
+epoch=
+pkgdesc="Install MySQL official tarball"
+arch=('x86_64')
+url=""
+license=('GPL')
+groups=()
+depends=(openssl ncurses5-compat-libs)
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=(mysql mysql-clients)
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=mysql.install
+changelog=
+source=(https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-8.0.16-linux-x86_64-minimal.tar.xz
+        mysqld.service)
+noextract=()
+md5sums=('7bac88f47e648bf9a38e7886e12d1ec5'
+         '16c772bbf742e629282bbcd130f2198d')
+validpgpkeys=()
+
+prepare() {
+  ln -sf mysql-8.0.16-linux-x86_64-minimal mysql
+}
+
+package() {
+  mkdir -p $pkgdir/usr
+  cp -R mysql/* $pkgdir/usr
+
+  rm $pkgdir/usr/lib/libcrypto.so* $pkgdir/usr/lib/libssl.so*
+  mv $pkgdir/usr/var $pkgdir/var
+
+  mkdir -p $pkgdir/usr/lib/systemd/system
+  mv $srcdir/mysqld.service $pkgdir/usr/lib/systemd/system
+
+  mkdir -p $pkgdir/etc
+  echo [mysqld] > $pkgdir/etc/my.cnf
+  echo basedir=/usr >> $pkgdir/etc/my.cnf
+  echo datadir=/var/lib/mysql >> $pkgdir/etc/my.cnf
+  echo secure_file_priv=/var/lib/mysql/files >> $pkgdir/etc/my.cnf
+
+  chmod 644 $pkgdir/etc/my.cnf
+
+  install -m 700 -d $pkgdir/var/lib/mysql
+  install -m 700 -d $pkgdir/var/lib/mysql/files
+}
+

@@ -1,0 +1,53 @@
+# This is an example PKGBUILD file. Use this as a start to creating your own,
+# and remove these comments. For more information, see 'man PKGBUILD'.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Maintainer: jeiea <solum5013@gmail.com>
+pkgname=libhangul
+pkgver=0.1
+pkgrel=1
+epoch=
+pkgdesc="custom version for semoe 2018"
+arch=('x86_64')
+url=""
+license=('GPL')
+groups=()
+depends=()
+makedepends=(intltool)
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=(https://gitlab.com/3beol/libhangul/-/archive/34646b21f4385627c8663884a9de00c8939c23ae/libhangul-34646b21f4385627c8663884a9de00c8939c23ae.tar.bz2)
+noextract=()
+md5sums=()
+validpgpkeys=()
+
+prepare() {
+  mv libhangul-34646b21f4385627c8663884a9de00c8939c23ae libhangul
+}
+
+build() {
+  cd libhangul
+  ./autogen.sh
+  ./configure --prefix=/usr
+  make
+}
+
+check() {
+  cd libhangul
+  make -k check
+}
+
+package() {
+  cd libhangul
+  make DESTDIR="$pkgdir/" install
+}
+
+md5sums=('88aded65c12eebe5273bb5bc32f8715f')
