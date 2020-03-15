@@ -1,0 +1,43 @@
+# Maintainer: jeiea <solum5013@gmail.com>
+pkgname=plasma-i3
+pkgver=0.1
+pkgrel=1
+epoch=
+pkgdesc="Create kde integrated i3 desktop entry"
+arch=('any')
+url=""
+license=('GPL')
+groups=()
+depends=(i3-wm)
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=(plasma-i3)
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=plasma-i3.install
+changelog=
+source=()
+noextract=()
+md5sums=()
+validpgpkeys=()
+
+package() {
+  mkdir -p $pkgdir/usr/share/xsessions
+  pushd $pkgdir/usr/share/xsessions
+  cat << EOF > plasma-i3.desktop
+[Desktop Entry]
+Name=plasma-i3
+Comment=improved dynamic tiling window manager
+Type=Application
+Exec=env KDEWM=i3 /usr/bin/startplasma-x11
+TryExec=i3
+Keywords=tiling;wm;windowmanager;window;manager;
+EOF
+  chmod 644 plasma-i3.desktop
+
+  popd
+}
+

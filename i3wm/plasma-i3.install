@@ -1,0 +1,14 @@
+post_install() {
+  pushd /usr/share/xsessions
+  echo NoDisplay=true >> i3.desktop
+  echo NoDisplay=true >> i3-with-shmlog.desktop
+  popd
+}
+
+pre_remove() {
+  pushd /usr/share/xsessions
+  sed -i /^NoDisplay=/d /usr/share/xsessions/i3-with-shmlog.desktop
+  sed -i /^NoDisplay=/d /usr/share/xsessions/i3.desktop
+  popd
+}
+
