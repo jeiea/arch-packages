@@ -1,0 +1,40 @@
+# Maintainer: jeiea <solum5013@gmail.com>
+pkgname=plasma-sway
+pkgver=0.1
+pkgrel=1
+epoch=
+pkgdesc="Create plasma integrated sway desktop entry"
+arch=('any')
+url=""
+license=('GPL')
+groups=()
+depends=(plasma-desktop plasma-wayland-session xorg-server-xwayland sway)
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=(plasma-sway)
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=plasma-sway.install
+changelog=
+source=()
+noextract=()
+md5sums=()
+validpgpkeys=()
+
+package() {
+  mkdir -p $pkgdir/usr/share/wayland-sessions
+  local entry="$pkgdir/usr/share/wayland-sessions/plasma-sway.desktop"
+  cat << EOF > "$entry"
+[Desktop Entry]
+Name=plasma-sway
+Comment=An i3-compatible Wayland compositor with plasma
+Exec=env KDEWM=sway /usr/bin/startplasma-wayland
+TryExec=sway
+Type=Application
+EOF
+  chmod 644 "$entry"
+}
+

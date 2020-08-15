@@ -1,0 +1,12 @@
+post_install() {
+  pushd /usr/share/wayland-sessions
+  # echo NoDisplay=true >> sway.desktop
+  popd
+}
+
+pre_remove() {
+  pushd /usr/share/wayland-sessions
+  sed -i /^NoDisplay=/d /usr/share/wayland-sessions/sway.desktop
+  popd
+}
+
